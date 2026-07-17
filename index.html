@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VR酔い研究｜移動法 AR 体験｜川野邊研究室 西野颯人</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230d1b2a%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-size=%2716%27 text-anchor=%27middle%27 fill=%27%2339d0ff%27 font-family=%27sans-serif%27 font-weight=%27bold%27%3EVR%3C/text%3E%3C/svg%3E">
+<script src="vendor/qrcode.js"></script>
+<style>
+  :root{--bg:#0d1b2a;--card:#13233a;--line:#39d0ff;--accent:#2b6cff;--txt:#eaf2fb;--sub:#9fb3c8}
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(160deg,#0a1622,#0d1b2a 40%,#101d30);
+    color:var(--txt);font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    line-height:1.7;min-height:100vh}
+  .wrap{max-width:680px;margin:0 auto;padding:28px 18px 60px}
+  header{text-align:center;margin-bottom:8px}
+  .kicker{color:var(--line);font-weight:800;font-size:13px;letter-spacing:.14em}
+  h1{font-size:26px;margin:6px 0 4px;font-weight:800}
+  h1 .b{color:var(--line)}
+  .lab{color:var(--sub);font-size:13px;margin-bottom:18px;text-align:center}
+  .card{background:var(--card);border:1px solid rgba(57,208,255,.22);border-radius:16px;
+    padding:20px;margin:14px 0;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+  .card h2{font-size:16px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+  .card h2 .n{background:var(--line);color:#04121e;width:24px;height:24px;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+  .btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{flex:1 1 180px;text-decoration:none;text-align:center;border-radius:12px;padding:16px 14px;
+    font-weight:800;font-size:16px;transition:.15s;border:2px solid transparent}
+  .btn.p{background:var(--accent);color:#fff}
+  .btn.p:active{transform:scale(.98)}
+  .btn.s{background:transparent;color:var(--txt);border-color:rgba(255,255,255,.25)}
+  .btn small{display:block;font-weight:600;font-size:11px;opacity:.8;margin-top:2px}
+  .qrbox{display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:center}
+  #qr{background:#fff;padding:12px;border-radius:12px;width:180px;height:180px;display:flex;
+    align-items:center;justify-content:center}
+  #qr img,#qr canvas,#qr table{width:100%!important;height:100%!important}
+  .qrtxt{flex:1 1 220px;min-width:200px}
+  .urlbox{background:#0a1622;border:1px solid rgba(255,255,255,.15);border-radius:8px;
+    padding:8px 10px;font-size:12px;color:var(--line);word-break:break-all;margin-top:8px;font-family:monospace}
+  .marker{text-align:center}
+  .marker img{width:200px;max-width:70%;border-radius:8px;background:#fff;padding:6px}
+  ol{margin:6px 0 0;padding-left:20px}
+  ol li{margin:6px 0}
+  .note{font-size:12.5px;color:var(--sub);background:rgba(255,208,80,.08);
+    border-left:3px solid #ffcc50;border-radius:6px;padding:10px 12px;margin-top:12px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-size:12px;background:rgba(57,208,255,.12);color:var(--line);
+    border:1px solid rgba(57,208,255,.3);border-radius:999px;padding:4px 10px;font-weight:700}
+  footer{text-align:center;color:var(--sub);font-size:12px;margin-top:26px;line-height:1.6}
+  b{color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">OPEN CAMPUS ｜ AR DEMO</div>
+    <h1><span class="b">VR酔い</span>を軽減する<br>移動法を体験しよう</h1>
+  </header>
+  <div class="lab">産業能率大学 情報マネジメント学部 川野邊研究室　西野 颯人<br>
+    研究テーマ：VR環境におけるUI/UXによるVR酔いの軽減</div>
+
+  <!-- 体験ボタン -->
+  <div class="card">
+    <h2><span class="n">▶</span> さっそく体験する</h2>
+    <div class="btns">
+      <a class="btn p" href="ar.html">📷 ARで見る<small>カメラでマーカーにかざす</small></a>
+      <a class="btn s" href="viewer.html">🧊 3Dで見る<small>カメラ不要・指で回せる</small></a>
+    </div>
+    <div class="chips"><span class="chip">スマホ対応</span><span class="chip">アプリ不要</span>
+      <span class="chip">iPhone / Android</span></div>
+  </div>
+
+  <!-- QR -->
+  <div class="card">
+    <h2><span class="n">1</span> スマホでQRを読み取る</h2>
+    <div class="qrbox">
+      <div id="qr"></div>
+      <div class="qrtxt">
+        スマホのカメラでこのQRを読み取り、<b>ARページ</b>を開きます。
+        表示されたら「カメラを許可」を選んでください。
+        <div class="urlbox" id="url">（URL）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- マーカー -->
+  <div class="card marker">
+    <h2 style="justify-content:center"><span class="n">2</span> マーカーにかざす</h2>
+    <img src="markers/vr-marker.png" alt="ARマーカー">
+    <p style="font-size:13px;color:var(--sub);margin:10px 0 0">
+      この「VR」マーカー（ポスターに掲示）に、枠全体が映るようにカメラを向けると、
+      VR環境がポスターの上に立体的に浮かび上がります。</p>
+  </div>
+
+  <!-- 使い方 -->
+  <div class="card">
+    <h2><span class="n">?</span> 見どころ</h2>
+    <ol>
+      <li><b>テレポート移動法</b>：放物線で着地点を指定し瞬間移動。視界が流れず酔いにくい。</li>
+      <li><b>スムーズ移動</b>：連続的に前進。視界が流れ続け酔いやすい（右下の視界に注目）。</li>
+      <li><b>視覚情報の最適化</b>：トンネル効果＋暗闇シーンで視界の流れを抑え、酔いを軽減。</li>
+    </ol>
+    <div class="note">💡 うまく映らないときは、マーカー全体を明るい場所で・画面いっぱいに映すと安定します。
+      カメラが起動しない場合は「3Dで見る」でも中身を確認できます。</div>
+  </div>
+
+  <footer>
+    © KAWANOBE Lab. ｜ 産業能率大学 情報マネジメント学部<br>
+    Powered by A-Frame + AR.js（Webブラウザで動作 / インストール不要）
+  </footer>
+</div>
+
+<script>
+  // 現在のフォルダを基準に ar.html の絶対URLを生成し、QR表示
+  (function () {
+    var base = location.href.replace(/[^/]*$/, '');   // 末尾ファイル名を除く
+    var arUrl = base + 'ar.html';
+    document.getElementById('url').textContent = arUrl;
+    try {
+      var qr = qrcode(0, 'M'); qr.addData(arUrl); qr.make();
+      document.getElementById('qr').innerHTML = qr.createImgTag(6, 0);
+      var img = document.querySelector('#qr img');
+      if (img) { img.style.width = '100%'; img.style.height = '100%'; img.style.imageRendering = 'pixelated'; }
+    } catch (e) {
+      document.getElementById('qr').textContent = 'QR生成エラー';
+    }
+  })();
+</script>
+</body>
+</html>

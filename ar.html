@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>VR酔い研究｜移動法 AR デモ</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230d1b2a%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-size=%2716%27 text-anchor=%27middle%27 fill=%27%2339d0ff%27 font-family=%27sans-serif%27 font-weight=%27bold%27%3EVR%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="ui.css">
+<!-- A-Frame 1.6.0 + AR.js 3.4.8 (マーカー型)｜ローカル同梱で会場WiFiに依存しない -->
+<script src="vendor/aframe.min.js"></script>
+<script src="vendor/aframe-ar.js"></script>
+<script src="world.js"></script>
+<script src="ui.js"></script>
+</head>
+<body>
+
+<!-- ローディング -->
+<div id="load">
+  <div class="sp"></div>
+  <div>カメラを起動しています…</div>
+  <div class="m">「許可」を選ぶとカメラが使えます</div>
+</div>
+
+<!-- 上部 -->
+<div id="topbar">
+  <h1><span class="b">VR酔い</span>研究 ｜ 移動法 AR デモ</h1>
+  <p>産業能率大学 情報マネジメント学部 川野邊研究室｜西野 颯人</p>
+</div>
+<div id="foot"><a href="index.html">◀ 使い方</a><a href="viewer.html">3Dで見る</a></div>
+
+<!-- マーカーヒント -->
+<div id="hint">
+  <div class="card">
+    <div class="ic">📷➜🅥🆁</div>
+    <div class="h">マーカーにカメラを向けてください</div>
+    <div class="s">ポスターの「VR」マーカーを枠全体が映るようにかざすと、VR環境が浮かび上がります。</div>
+  </div>
+</div>
+
+<!-- 説明パネル -->
+<div id="info"><div class="t"></div><div class="d"></div></div>
+
+<!-- HUD(ユーザーの視界) -->
+<div id="hudwrap"><canvas id="hud" width="150" height="100"></canvas></div>
+
+<!-- モード切替 -->
+<div id="modes"></div>
+
+<!-- ===== AR シーン ===== -->
+<a-scene
+  vr-mode-ui="enabled: false"
+  loading-screen="enabled: false"
+  renderer="antialias: true; alpha: true; colorManagement: true; sortTransparentObjects: true"
+  embedded
+  arjs="sourceType: webcam; patternRatio: 0.5; trackingMethod: best; debugUIEnabled: false; detectionMode: mono; maxDetectionRate: 60; cameraParametersUrl: data/camera_para.dat;">
+
+  <a-marker
+    id="marker"
+    type="pattern"
+    url="markers/vr-marker.patt"
+    smooth="true" smoothCount="8" smoothTolerance="0.012" smoothThreshold="4">
+    <a-entity id="content" scale="0.5 0.5 0.5" vrworld></a-entity>
+  </a-marker>
+
+  <a-entity camera></a-entity>
+</a-scene>
+
+<script>
+  // マーカーの検出状態でヒントを出し入れ
+  window.addEventListener('load', function () {
+    var marker = document.getElementById('marker');
+    var hint = document.getElementById('hint');
+    if (marker) {
+      marker.addEventListener('markerFound', function () { hint.classList.add('hide'); });
+      marker.addEventListener('markerLost', function () { hint.classList.remove('hide'); });
+    }
+    var scene = document.querySelector('a-scene');
+    scene.addEventListener('arjs-video-loaded', function () { if (window.hideLoader) window.hideLoader(); });
+    // 保険: 一定時間で必ずローダーを消す
+    setTimeout(function () { if (window.hideLoader) window.hideLoader(); }, 4500);
+  });
+</script>
+</body>
+</html>

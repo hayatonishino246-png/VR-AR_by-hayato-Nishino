@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>VR酔い研究｜移動法 3Dビュー</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%230d1b2a%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-size=%2716%27 text-anchor=%27middle%27 fill=%27%2339d0ff%27 font-family=%27sans-serif%27 font-weight=%27bold%27%3EVR%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="ui.css">
+<script src="vendor/aframe.min.js"></script>
+<script src="world.js"></script>
+<script src="ui.js"></script>
+<script>
+  /* ドラッグで回転できるターンテーブル（カメラ無しでも中身を確認できる） */
+  AFRAME.registerComponent('turntable', {
+    init: function () {
+      this.rot = 0.5; this.auto = true; this.down = false; this.px = 0;
+      const el = this.el, cv = this.el.sceneEl;
+      const start = (x) => { this.down = true; this.auto = false; this.px = x; };
+      const move = (x) => { if (!this.down) return; this.rot += (x - this.px) * 0.008; this.px = x; };
+      const end = () => { this.down = false; };
+      cv.addEventListener('mousedown', e => start(e.clientX));
+      window.addEventListener('mousemove', e => move(e.clientX));
+      window.addEventListener('mouseup', end);
+      cv.addEventListener('touchstart', e => start(e.touches[0].clientX), { passive: true });
+      window.addEventListener('touchmove', e => move(e.touches[0].clientX), { passive: true });
+      window.addEventListener('touchend', end);
+    },
+    tick: function (t, dt) {
+      if (this.auto) this.rot += (dt || 16) / 1000 * 0.25;
+      this.el.object3D.rotation.y = this.rot;
+    }
+  });
+</script>
+</head>
+<body>
+
+<div id="load"><div class="sp"></div><div>3Dシーンを読み込み中…</div>
+  <div class="m">ドラッグ／スワイプで回転できます</div></div>
+
+<div id="topbar">
+  <h1><span class="b">VR酔い</span>研究 ｜ 移動法 3Dビュー</h1>
+  <p>ドラッグで回転｜カメラを使わずに中身を確認できます</p>
+</div>
+<div id="foot"><a href="index.html">◀ 使い方</a><a href="ar.html">ARで見る</a></div>
+
+<div id="info"><div class="t"></div><div class="d"></div></div>
+<div id="hudwrap"><canvas id="hud" width="150" height="100"></canvas></div>
+<div id="modes"></div>
+
+<a-scene
+  vr-mode-ui="enabled: false"
+  loading-screen="enabled: false"
+  background="color: #0d1b2a"
+  renderer="antialias: true; colorManagement: true; sortTransparentObjects: true">
+
+  <a-entity turntable position="0 0 0">
+    <a-entity id="content" scale="1 1 1" vrworld></a-entity>
+  </a-entity>
+
+  <a-entity id="cam" camera="fov: 42" position="0 1.55 2.35" rotation="-28 0 0"></a-entity>
+</a-scene>
+
+<script>
+  window.addEventListener('load', function () {
+    var scene = document.querySelector('a-scene');
+    if (scene.hasLoaded) { if (window.hideLoader) window.hideLoader(); }
+    else scene.addEventListener('loaded', function () { if (window.hideLoader) window.hideLoader(); });
+    setTimeout(function () { if (window.hideLoader) window.hideLoader(); }, 3000);
+  });
+</script>
+</body>
+</html>

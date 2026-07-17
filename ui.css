@@ -1,0 +1,81 @@
+/* 共有UI ― オーバーレイ / ボタン / HUD / ヒント */
+:root{
+  --bg:#0d1b2a; --panel:rgba(13,20,32,.82); --line:#39d0ff;
+  --txt:#eaf2fb; --sub:#9fb3c8; --accent:#2b6cff;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  color:var(--txt);background:#000}
+a-scene,canvas.a-canvas{display:block}
+/* A-FrameのVR/ARボタンは使わないので隠す（.a-fullscreenはサイズ制御に使われるため触らない） */
+.a-enter-vr,.a-enter-ar,.a-enter-vr-button,.a-enter-ar-button{display:none!important}
+
+/* 上部タイトルバー */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:20;
+  padding:10px 14px calc(10px + env(safe-area-inset-top)) 14px;
+  background:linear-gradient(180deg,rgba(6,12,20,.86),rgba(6,12,20,0));
+  pointer-events:none}
+#topbar h1{margin:0;font-size:16px;font-weight:800;letter-spacing:.02em}
+#topbar h1 .b{color:var(--line)}
+#topbar p{margin:2px 0 0;font-size:11.5px;color:var(--sub);font-weight:500}
+
+/* モード切替ボタン */
+#modes{position:fixed;left:0;right:0;bottom:calc(12px + env(safe-area-inset-bottom));
+  z-index:20;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+  padding:0 10px}
+.mbtn{pointer-events:auto;border:1.5px solid rgba(255,255,255,.22);
+  background:var(--panel);color:var(--txt);border-radius:999px;
+  padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;
+  backdrop-filter:blur(6px);transition:.15s;white-space:nowrap}
+.mbtn:active{transform:scale(.96)}
+.mbtn.on{background:var(--accent);border-color:#fff;box-shadow:0 0 0 2px rgba(43,108,255,.35)}
+.mbtn .k{display:block;font-size:10px;color:var(--sub);font-weight:600}
+.mbtn.on .k{color:#dbe6ff}
+
+/* 説明パネル */
+#info{position:fixed;left:12px;right:12px;bottom:calc(78px + env(safe-area-inset-bottom));
+  z-index:19;max-width:520px;margin:0 auto;
+  background:var(--panel);border:1px solid rgba(57,208,255,.35);
+  border-radius:12px;padding:10px 13px;backdrop-filter:blur(6px);
+  box-shadow:0 6px 24px rgba(0,0,0,.4)}
+#info b{color:var(--line)}
+#info .t{font-size:13.5px;font-weight:800;margin-bottom:3px}
+#info .d{font-size:12px;line-height:1.6;color:#dbe6f2}
+
+/* HUD(ユーザーの視界) */
+#hudwrap{position:fixed;right:12px;bottom:calc(150px + env(safe-area-inset-bottom));
+  z-index:19;width:150px;border-radius:10px;overflow:hidden;
+  border:2px solid rgba(255,255,255,.35);box-shadow:0 6px 20px rgba(0,0,0,.5)}
+#hud{display:block;width:150px;height:100px;background:#6b7079}
+
+/* マーカーヒント(ARのみ) */
+#hint{position:fixed;inset:0;z-index:15;display:flex;align-items:center;justify-content:center;
+  pointer-events:none;transition:opacity .3s}
+#hint .card{background:rgba(6,12,20,.78);border:1px solid rgba(57,208,255,.4);
+  border-radius:16px;padding:20px 22px;text-align:center;max-width:300px}
+#hint .ic{font-size:34px}
+#hint .h{font-size:15px;font-weight:800;margin:8px 0 4px}
+#hint .s{font-size:12px;color:var(--sub);line-height:1.6}
+#hint.hide{opacity:0}
+
+/* ローディング */
+#load{position:fixed;inset:0;z-index:40;background:#0d1b2a;color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  transition:opacity .4s}
+#load.hide{opacity:0;pointer-events:none}
+#load .sp{width:42px;height:42px;border:4px solid rgba(255,255,255,.2);
+  border-top-color:var(--line);border-radius:50%;animation:spin 1s linear infinite}
+#load .m{font-size:13px;color:var(--sub)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* フッターの小リンク */
+#foot{position:fixed;top:calc(6px + env(safe-area-inset-top));right:10px;z-index:21;
+  display:flex;gap:6px}
+#foot a{pointer-events:auto;font-size:11px;color:var(--txt);text-decoration:none;
+  background:var(--panel);border:1px solid rgba(255,255,255,.2);
+  border-radius:999px;padding:5px 10px;font-weight:700}
+@media (max-width:380px){
+  .mbtn{padding:8px 10px;font-size:12px}
+  #hudwrap{width:120px}#hud{width:120px;height:80px}
+}
